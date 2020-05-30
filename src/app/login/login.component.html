@@ -42,16 +42,15 @@
       </mat-checkbox>
     </p>
   </mat-dialog-content>
-  <div style="text-align: right;">
-    <button type="button" mat-button mat-dialog-close>Cancel</button>
-  <button type="submit" mat-button 
-      class="background-primary text-floral-white"
-      [disabled]="loginForm.form.invalid" >
-    Login
-  </button>
-  </div>
+  
   <mat-dialog-actions>
-
+    <span class="flex-spacer "></span>
+      <button type="button" mat-button mat-dialog-close>Cancel</button>
+      <button type="submit" mat-button 
+        class="background-primary text-floral-white"
+        [disabled]="loginForm.form.invalid" >
+        Login
+      </button>
   </mat-dialog-actions>
   
 </form>
