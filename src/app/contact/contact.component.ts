@@ -64,7 +64,6 @@ export class ContactComponent implements OnInit {
       .subscribe(
         (data) => {
           this.onValueChanged(data);
-          
         }
       )
 
