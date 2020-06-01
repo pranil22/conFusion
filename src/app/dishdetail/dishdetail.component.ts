@@ -2,10 +2,11 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { switchMap } from 'rxjs/operators';
 
 import { Dish } from '../shared/dish';
 import { DishService } from '../services/dish.service';
-import { switchMap } from 'rxjs/operators';
+import { baseURL } from '../shared/baseurl';
 
 
 
@@ -23,6 +24,8 @@ export class DishdetailComponent implements OnInit {
   prev: string;
   next: string;
   isSubmmited = false;
+  dishCopy: Dish;
+  baseURL = baseURL;
   formValue = {
     author: '',
     rating: '',
@@ -70,6 +73,7 @@ export class DishdetailComponent implements OnInit {
       .subscribe(
         (dish) => {
           this.dish = dish;
+          this.dishCopy = dish;
           this.setPrevNext(dish.id);
         }
       )
@@ -107,12 +111,24 @@ export class DishdetailComponent implements OnInit {
 
   onSubmit() {
     this.isSubmmited = true;
-    this.dish.comments.push({
+    this.dishCopy.comments.push({
       author: this.formValue.author,
       rating: +this.formValue.rating,
       comment: this.formValue.comment,
       date: (new Date().toISOString())
     });
+    this.dishService.putDish(this.dishCopy)
+      .subscribe(
+        (dish: Dish) => {
+          this.dish = dish;
+          this.dishCopy = dish;
+        },
+        (errMess) => {
+          this.errMess = errMess;
+          this.dish = null;
+          this.dishCopy = null;
+        }
+      )
     this.formDirective.resetForm();
     this.form.reset({
       author: '',
