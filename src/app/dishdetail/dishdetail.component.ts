@@ -29,7 +29,7 @@ export class DishdetailComponent implements OnInit {
     comment: ''
   };
   rate: string;
-
+  errMess: string;
   formErrors = {
     'author': '',
     'comment': ''
@@ -57,6 +57,9 @@ export class DishdetailComponent implements OnInit {
         (dishIds) => {
           this.dishIds = dishIds;
           console.log(this.dishIds);
+        },
+        (errMess) => {
+          this.errMess = errMess;
         }
       )
 
